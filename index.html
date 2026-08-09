@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lux Construction — Architects of Permanence</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Cormorant+SC:wght@300;400;500&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,300&family=Syncopate:wght@400;700&display=swap" />
+
+  <style>
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold:       #c9a86c;
+      --gold-light: #e2c99a;
+      --cream:      #f5f0e8;
+      --warm-white: #faf8f4;
+      --charcoal:   #1a1814;
+      --mid-dark:   #2a2520;
+      --glass-bg:   rgba(18,15,12,0.72);
+      --glass-border: rgba(201,168,108,0.18);
+      --font-display: 'Cormorant Garamond', serif;
+      --font-sc:      'Cormorant SC', serif;
+      --font-body:    'Bodoni Moda', serif;
+      --font-utility: 'Syncopate', sans-serif;
+    }
+    html { scroll-behavior: auto; }
+    body {
+      background: var(--charcoal);
+      color: var(--cream);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      height: 72px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.45rem;
+      letter-spacing: 0.04em;
+      color: var(--gold-light);
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.8rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-utility);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.72);
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-enquire {
+      font-family: var(--font-utility);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.5rem;
+      border: 1px solid var(--glass-border);
+      color: var(--gold-light);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .nav-enquire:hover {
+      background: rgba(201,168,108,0.12);
+      border-color: var(--gold);
+    }
+
+    /* ─── SCROLLYTELLING HERO ─── */
+    #scroll-container {
+      position: relative;
+      height: 8000px;
+      background: var(--charcoal);
+    }
+    #sticky-hero {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* Dark gradient overlays for text legibility */
+    #sticky-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(18,15,12,0.35) 0%,
+        rgba(18,15,12,0.05) 40%,
+        rgba(18,15,12,0.05) 60%,
+        rgba(18,15,12,0.55) 100%
+      );
+      z-index: 1;
+    }
+
+    .scroll-phase {
+      position: absolute;
+      z-index: 2;
+      display: none;
+      text-align: center;
+      padding: 0 2rem;
+      pointer-events: none;
+      width: 100%;
+    }
+    .scroll-phase.active { display: block; }
+
+    .phase-eyebrow {
+      font-family: var(--font-utility);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+      opacity: 0.85;
+    }
+    .phase-title {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(3.5rem, 8vw, 7.5rem);
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: var(--warm-white);
+      text-shadow: 0 4px 40px rgba(0,0,0,0.6);
+      margin-bottom: 1.4rem;
+    }
+    .phase-sub {
+      font-family: var(--font-sc);
+      font-weight: 300;
+      font-size: 0.85rem;
+      letter-spacing: 0.22em;
+      color: rgba(245,240,232,0.65);
+    }
+
+    /* Phase-specific positioning */
+    #phase-1 { top: 50%; transform: translateY(-50%); }
+    #phase-2 { top: 50%; transform: translateY(-50%); }
+    #phase-3 { top: 50%; transform: translateY(-50%); }
+    #phase-4 { top: 50%; transform: translateY(-50%); }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      opacity: 0.6;
+    }
+    .scroll-hint span {
+      font-family: var(--font-utility);
+      font-size: 0.52rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(0.8); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* Fallback hero background (visible when no frames loaded) */
+    #sticky-hero {
+      background: radial-gradient(ellipse at center, #2a2118 0%, #0d0b09 100%);
+    }
+
+    /* ─── SELECTED WORK ─── */
+    #work {
+      background: var(--warm-white);
+      color: var(--charcoal);
+      padding: 8rem 6rem;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 2rem;
+      margin-bottom: 5rem;
+    }
+    .section-eyebrow {
+      font-family: var(--font-utility);
+      font-size: 0.58rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      color: var(--charcoal);
+      letter-spacing: -0.01em;
+    }
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+    .project-image-wrap {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: #ddd6cb;
+    }
+    .project-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .project-card:hover .project-image-wrap img { transform: scale(1.04); }
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,24,20,0.55) 0%, transparent 55%);
+    }
+    .project-tag {
+      position: absolute;
+      bottom: 1.2rem;
+      left: 1.4rem;
+      font-family: var(--font-utility);
+      font-size: 0.52rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      background: rgba(18,15,12,0.65);
+      backdrop-filter: blur(8px);
+      padding: 0.35rem 0.8rem;
+      border: 1px solid rgba(201,168,108,0.25);
+    }
+    .project-meta {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .project-title {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.9rem;
+      color: var(--charcoal);
+      letter-spacing: -0.01em;
+    }
+    .project-year {
+      font-family: var(--font-utility);
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      color: rgba(26,24,20,0.45);
+    }
+    .project-desc {
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: rgba(26,24,20,0.65);
+      font-weight: 400;
+    }
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: var(--font-utility);
+      font-size: 0.56rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-bottom: 1px solid rgba(201,168,108,0.4);
+      padding-bottom: 0.25rem;
+      transition: gap 0.3s, border-color 0.3s;
+      width: fit-content;
+    }
+    .project-link:hover { gap: 1.1rem; border-color: var(--gold); }
+
+    /* ─── PHILOSOPHY ─── */
+    #philosophy {
+      background: var(--charcoal);
+      padding: 9rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8rem;
+      align-items: center;
+    }
+    .philosophy-left .section-title { color: var(--cream); }
+    .philosophy-left .section-eyebrow { margin-bottom: 1.5rem; display: block; }
+    .philosophy-body {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: rgba(245,240,232,0.62);
+      margin-top: 2rem;
+    }
+    .philosophy-right {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+    .pillar {
+      display: flex;
+      gap: 1.8rem;
+      align-items: flex-start;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(201,168,108,0.12);
+    }
+    .pillar:last-child { border-bottom: none; padding-bottom: 0; }
+    .pillar-num {
+      font-family: var(--font-utility);
+      font-size: 0.55rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      padding-top: 0.3rem;
+      flex-shrink: 0;
+    }
+    .pillar-title {
+      font-family: var(--font-sc);
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      color: var(--cream);
+      margin-bottom: 0.6rem;
+    }
+    .pillar-text {
+      font-size: 0.82rem;
+      line-height: 1.8;
+      color: rgba(245,240,232,0.5);
+    }
+
+    /* ─── SERVICES ─── */
+    #services {
+      background: var(--mid-dark);
+      padding: 8rem 6rem;
+    }
+    #services .section-title { color: var(--cream); margin-bottom: 4rem; }
+    #services .section-eyebrow { display: block; margin-bottom: 1.2rem; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: rgba(201,168,108,0.1);
+      border: 1px solid rgba(201,168,108,0.1);
+    }
+    .service-card {
+      background: var(--mid-dark);
+      padding: 3.5rem 2.8rem;
+      transition: background 0.4s;
+    }
+    .service-card:hover { background: rgba(201,168,108,0.06); }
+    .service-icon {
+      width: 32px;
+      height: 1px;
+      background: var(--gold);
+      margin-bottom: 2rem;
+    }
+    .service-name {
+      font-family: var(--font-sc);
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+    .service-desc {
+      font-size: 0.8rem;
+      line-height: 1.8;
+      color: rgba(245,240,232,0.48);
+    }
+
+    /* ─── TESTIMONIALS ─── */
+    #testimonials {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 6rem;
+      overflow: hidden;
+    }
+    .testimonials-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(18,15,12,0.8) 0%, rgba(18,15,12,0.65) 50%, rgba(18,15,12,0.85) 100%),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="%231a1814"/><path d="M0 50 L100 50 M50 0 L50 100" stroke="%23c9a86c" stroke-width="0.2" opacity="0.15"/></svg>');
+      background-size: cover, 60px 60px;
+      z-index: 0;
+    }
+    /* Architectural line pattern overlay */
+    .testimonials-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(201,168,108,0.06) 80px),
+        repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(201,168,108,0.06) 80px);
+      background-size: 80px 80px;
+    }
+    #testimonials .section-header { position: relative; z-index: 1; justify-content: center; margin-bottom: 4rem; flex-direction: column; text-align: center; }
+    #testimonials .section-title { color: var(--cream); }
+    .testimonials-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .testimonial-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(1.3);
+      -webkit-backdrop-filter: blur(20px) saturate(1.3);
+      border: 1px solid var(--glass-border);
+      padding: 3rem 2.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      transition: border-color 0.4s, transform 0.4s;
+    }
+    .testimonial-card:hover {
+      border-color: rgba(201,168,108,0.35);
+      transform: translateY(-4px);
+    }
+    .stars {
+      display: flex;
+      gap: 0.3rem;
+    }
+    .star {
+      color: var(--gold);
+      font-size: 0.75rem;
+    }
+    .testimonial-quote {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: rgba(245,240,232,0.88);
+      flex: 1;
+    }
+    .testimonial-quote::before {
+      content: '\201C';
+      font-size: 3rem;
+      color: var(--gold);
+      line-height: 0;
+      vertical-align: -0.5em;
+      margin-right: 0.2em;
+      font-style: normal;
+    }
+    .testimonial-meta {
+      border-top: 1px solid rgba(201,168,108,0.15);
+      padding-top: 1.2rem;
+    }
+    .testimonial-name {
+      font-family: var(--font-sc);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--cream);
+      margin-bottom: 0.25rem;
+    }
+    .testimonial-role {
+      font-family: var(--font-utility);
+      font-size: 0.52rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.75;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--charcoal);
+      padding: 9rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8rem;
+      align-items: start;
+    }
+    .contact-left .section-title { color: var(--cream); margin-bottom: 2rem; }
+    .contact-left .section-eyebrow { display: block; margin-bottom: 1.2rem; }
+    .contact-body {
+      font-size: 0.88rem;
+      line-height: 1.85;
+      color: rgba(245,240,232,0.55);
+      margin-bottom: 3rem;
+    }
+    .contact-details { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-item-label {
+      font-family: var(--font-utility);
+      font-size: 0.5rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+    .contact-item-value {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--cream);
+    }
+    .contact-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding-top: 4rem;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 0.6rem; }
+    .form-label {
+      font-family: var(--font-utility);
+      font-size: 0.52rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .form-input, .form-textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,108,0.15);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      padding: 1rem 1.2rem;
+      outline: none;
+      transition: border-color 0.3s, background 0.3s;
+      resize: none;
+    }
+    .form-input:focus, .form-textarea:focus {
+      border-color: rgba(201,168,108,0.4);
+      background: rgba(255,255,255,0.07);
+    }
+    .form-input::placeholder, .form-textarea::placeholder {
+      color: rgba(245,240,232,0.25);
+    }
+    .form-textarea { min-height: 130px; }
+    .form-submit {
+      align-self: flex-start;
+      font-family: var(--font-utility);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      background: var(--gold);
+      border: none;
+      padding: 1.1rem 2.8rem;
+      cursor: pointer;
+      transition: background 0.3s, letter-spacing 0.3s;
+    }
+    .form-submit:hover {
+      background: var(--gold-light);
+      letter-spacing: 0.28em;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--charcoal);
+      border-top: 1px solid rgba(201,168,108,0.12);
+      padding: 2.5rem 6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--gold-light);
+      letter-spacing: 0.04em;
+    }
+    .footer-copy {
+      font-family: var(--font-utility);
+      font-size: 0.5rem;
+      letter-spacing: 0.18em;
+      color: rgba(245,240,232,0.3);
+    }
+    .footer-socials {
+      display: flex;
+      gap: 1.8rem;
+    }
+    .footer-socials a {
+      font-family: var(--font-utility);
+      font-size: 0.5rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.4);
+      transition: color 0.3s;
+    }
+    .footer-socials a:hover { color: var(--gold); }
+
+    /* ─── CANVAS FALLBACK GRADIENT ─── */
+    .canvas-fallback-text {
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      text-align: center;
+      pointer-events: none;
+    }
+
+    /* ─── SCROLL PROGRESS BAR ─── */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--gold), var(--gold-light));
+      z-index: 2000;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      #work, #philosophy, #services, #contact, footer { padding-left: 2rem; padding-right: 2rem; }
+      #testimonials { padding-left: 2rem; padding-right: 2rem; }
+      .work-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      #philosophy, #contact { grid-template-columns: 1fr; gap: 3rem; }
+      .phase-title { font-size: clamp(2.5rem, 9vw, 5rem); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-line { animation: none; }
+      .project-image-wrap img { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Scroll Progress -->
+  <div id="scroll-progress"></div>
+
+  <!-- ─── NAVBAR ─── -->
+  <nav>
+    <span class="nav-logo">lux construction</span>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#philosophy">Philosophy</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-enquire">Enquire</a>
+  </nav>
+
+  <!-- ─── SCROLLYTELLING HERO ─── -->
+  <section id="scroll-container">
+    <div id="sticky-hero">
+      <canvas id="hero-canvas"></canvas>
+
+      <!-- Phase 1 -->
+      <div class="scroll-phase active" id="phase-1">
+        <p class="phase-eyebrow">Est. 2004 — Mumbai & Dubai</p>
+        <h1 class="phase-title">Sculpting Space</h1>
+        <p class="phase-sub">Where Architecture Meets Permanence</p>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="scroll-phase" id="phase-2">
+        <p class="phase-eyebrow">Structure & Form</p>
+        <h1 class="phase-title">Structural Balance</h1>
+        <p class="phase-sub">Engineering Harmony Into Every Plane</p>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="scroll-phase" id="phase-3">
+        <p class="phase-eyebrow">Motion & Tension</p>
+        <h1 class="phase-title">The Kinetic Core</h1>
+        <p class="phase-sub">Space That Breathes With Its Inhabitants</p>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="scroll-phase" id="phase-4">
+        <p class="phase-eyebrow">Illumination & Atmosphere</p>
+        <h1 class="phase-title">Sculpting Light</h1>
+        <p class="phase-sub">Luminance as the Final Material</p>
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="scroll-hint">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SELECTED WORK ─── -->
+  <section id="work">
+    <div class="section-header">
+      <div>
+        <span class="section-eyebrow">Selected Work</span>
+        <h2 class="section-title">Commissions of Consequence</h2>
+      </div>
+    </div>
+    <div class="work-grid">
+      <!-- Project 1 -->
+      <article class="project-card">
+        <div class="project-image-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=900&q=80"
+            alt="Villa Sereno — Private Residence, Goa"
+            loading="lazy"
+          />
+          <div class="project-overlay"></div>
+          <span class="project-tag">Residential · Goa, India</span>
+        </div>
+        <div class="project-meta">
+          <h3 class="project-title">Villa Sereno</h3>
+          <span class="project-year">2023</span>
+        </div>
+        <p class="project-desc">
+          A 6,200 sq ft coastal residence where the sea is framed as architecture itself.
+          Cantilevered volumes dissolve the boundary between cliff-face and ocean horizon,
+          while thermal stone cladding ages into the landscape over decades.
+        </p>
+        <a href="#contact" class="project-link">View Project →</a>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="project-card">
+        <div class="project-image-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80"
+            alt="Glass House — Corporate HQ, Dubai"
+            loading="lazy"
+          />
+          <div class="project-overlay"></div>
+          <span class="project-tag">Commercial · Dubai, UAE</span>
+        </div>
+        <div class="project-meta">
+          <h3 class="project-title">Glass House</h3>
+          <span class="project-year">2024</span>
+        </div>
+        <p class="project-desc">
+          A 22-storey commercial tower whose double-skin façade captures morning light
+          and dissipates afternoon heat — a building that changes character every hour.
+          Winner of the Gulf Architecture Award 2024 for sustainable innovation.
+        </p>
+        <a href="#contact" class="project-link">View Project →</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ─── PHILOSOPHY ─── -->
+  <section id="philosophy">
+    <div class="philosophy-left">
+      <span class="section-eyebrow">Our Philosophy</span>
+      <h2 class="section-title">Built on<br/>Conviction</h2>
+      <p class="philosophy-body">
+        We do not build what is fashionable. We build what endures —
+        structures that accumulate meaning as they age, that resist
+        the disposable logic of modern construction, and that earn
+        their place in the landscape across generations.
+      </p>
+    </div>
+    <div class="philosophy-right">
+      <div class="pillar">
+        <span class="pillar-num">01</span>
+        <div>
+          <p class="pillar-title">Material Honesty</p>
+          <p class="pillar-text">Every surface reveals what it is. No cladding that lies, no finish that disguises. The structural logic of a building should be readable from its facade.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <span class="pillar-num">02</span>
+        <div>
+          <p class="pillar-title">Climatic Responsiveness</p>
+          <p class="pillar-text">Buildings breathe. We design with prevailing winds, sun angles, and monsoon patterns as primary constraints — before style, before budget.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <span class="pillar-num">03</span>
+        <div>
+          <p class="pillar-title">Generational Thinking</p>
+          <p class="pillar-text">We ask how a structure will feel in 40 years, not just at handover. This shapes every material specification, every structural decision.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SERVICES ─── -->
+  <section id="services">
+    <span class="section-eyebrow">What We Do</span>
+    <h2 class="section-title" style="color:var(--cream);margin-top:1rem;margin-bottom:4rem;font-family:var(--font-display);font-style:italic;font-weight:400;font-size:clamp(2.2rem,4vw,3.8rem);">The Full Spectrum<br/>of Realisation</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon"></div>
+        <p class="service-name">Architectural Design</p>
+        <p class="service-desc">Concept through construction drawings. Master planning, schematic design, design development, and technical documentation for projects of any scale.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"></div>
+        <p class="service-name">Interior Architecture</p>
+        <p class="service-desc">We do not decorate; we shape interior space. Volume, proportion, light, and material are our instruments — applied from structure inward.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"></div>
+        <p class="service-name">Project Management</p>
+        <p class="service-desc">Full construction administration, contractor coordination, material procurement, and quality oversight. One point of contact, zero ambiguity.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"></div>
+        <p class="service-name">Landscape Integration</p>
+        <p class="service-desc">The ground around a building is not leftover. We design landscape and hardscape as extensions of the architectural logic, not afterthoughts.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"></div>
+        <p class="service-name">Heritage Restoration</p>
+        <p class="service-desc">Structures with history require a different discipline. We restore with precision, research, and a commitment to the original maker's intentions.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"></div>
+        <p class="service-name">Feasibility & Advisory</p>
+        <p class="service-desc">Before a brief is fixed, we help clients understand what is possible — financially, structurally, and within the regulatory landscape of their site.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TESTIMONIALS ─── -->
+  <section id="testimonials">
+    <div class="testimonials-bg"></div>
+    <div class="section-header">
+      <span class="section-eyebrow">Client Words</span>
+      <h2 class="section-title">Voices From<br/>The Built</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="testimonial-quote">
+          They did not ask what we wanted. They asked who we were. The house that came from that question is nothing like what we would have specified — and it is perfect.
+        </p>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">Arjun & Meera Khanna</p>
+          <p class="testimonial-role">Villa Sereno · Goa Residence</p>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="testimonial-quote">
+          In 18 years of commissioning buildings across three continents, I have never encountered a team that manages complexity with such apparent calm. The Glass House delivered on time and under budget.
+        </p>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">Tariq Al-Mansouri</p>
+          <p class="testimonial-role">Glass House · Dubai HQ</p>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="testimonial-quote">
+          The restoration of our 1930s estate could have gone very wrong. Lux Construction's research team spent three months sourcing original material suppliers. The result is indistinguishable from the original.
+        </p>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">Lady Priya Rathore</p>
+          <p class="testimonial-role">Heritage Restoration · Udaipur</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="contact">
+    <div class="contact-left">
+      <span class="section-eyebrow">Begin a Conversation</span>
+      <h2 class="section-title">Commission<br/>Something<br/>Lasting</h2>
+      <p class="contact-body">
+        We accept a limited number of commissions each year. If you have a project
+        of ambition — residential, commercial, or heritage — we would like to hear
+        about it. Initial consultations are without obligation.
+      </p>
+      <div class="contact-details">
+        <div>
+          <p class="contact-item-label">Studio</p>
+          <p class="contact-item-value">Mumbai · Dubai · Bengaluru</p>
+        </div>
+        <div>
+          <p class="contact-item-label">Email</p>
+          <p class="contact-item-value">enquire@luxconstruction.in</p>
+        </div>
+        <div>
+          <p class="contact-item-label">Phone</p>
+          <p class="contact-item-value">+91 22 4001 7890</p>
+        </div>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input class="form-input" type="text" placeholder="Your name" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" placeholder="your@email.com" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Project Type</label>
+        <input class="form-input" type="text" placeholder="Residential / Commercial / Heritage" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tell Us About Your Vision</label>
+        <textarea class="form-textarea" placeholder="Describe the project, site, and what you hope to achieve…"></textarea>
+      </div>
+      <button class="form-submit" onclick="this.textContent='Enquiry Sent ✓'; this.style.background='#8a7a5a';">Send Enquiry</button>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <span class="footer-logo">lux construction</span>
+    <span class="footer-copy">© 2025 Lux Construction Pvt. Ltd. All rights reserved.</span>
+    <div class="footer-socials">
+      <a href="#">Instagram</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Archinect</a>
+    </div>
+  </footer>
+
+  <!-- ─── GSAP CDN ─── -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    /* ──────────────────────────────────────────
+       CANVAS SEQUENCE SCROLLYTELLING
+       ────────────────────────────────────────── */
+    (function () {
+      const TOTAL_FRAMES = 240;
+      const FRAME_PATH   = 'public/assets/sequence/';  // adjust if serving from root
+      const canvas  = document.getElementById('hero-canvas');
+      const ctx     = canvas.getContext('2d');
+      const phases  = [
+        document.getElementById('phase-1'),
+        document.getElementById('phase-2'),
+        document.getElementById('phase-3'),
+        document.getElementById('phase-4'),
+      ];
+
+      let images       = new Array(TOTAL_FRAMES);
+      let loadedCount  = 0;
+      let currentFrame = 0;
+      let framesReady  = false;
+
+      function resize() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+        if (framesReady && images[currentFrame]) drawFrame(currentFrame);
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      /* ── Draw ── */
+      function drawFrame(n) {
+        const img = images[n];
+        if (!img || !img.complete) return;
+        const cw = canvas.width, ch = canvas.height;
+        const ir = img.naturalWidth / img.naturalHeight;
+        const cr = cw / ch;
+        let sx, sy, sw, sh;
+        if (ir > cr) {
+          sh = img.naturalHeight; sw = sh * cr;
+          sx = (img.naturalWidth - sw) / 2; sy = 0;
+        } else {
+          sw = img.naturalWidth; sh = sw / cr;
+          sx = 0; sy = (img.naturalHeight - sh) / 2;
+        }
+        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch);
+      }
+
+      /* ── Fallback gradient (always drawn, overwritten when frames load) ── */
+      function drawFallback(progress) {
+        const grd = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        const t   = Math.sin(progress * Math.PI);
+        grd.addColorStop(0,   `hsl(${30 + t*15}, ${18 + t*8}%, ${8 + t*5}%)`);
+        grd.addColorStop(0.5, `hsl(${25 + t*10}, 15%, ${5 + t*3}%)`);
+        grd.addColorStop(1,   `hsl(35, 12%, 6%)`);
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
+      /* ── Load frames ── */
+      function loadFrames() {
+        for (let i = 0; i < TOTAL_FRAMES; i++) {
+          const img = new Image();
+          const idx = String(i).padStart(6, '0');
+          img.src = `${FRAME_PATH}frame_${idx}.jpeg`;
+          img.onload = () => {
+            loadedCount++;
+            if (loadedCount === TOTAL_FRAMES) framesReady = true;
+          };
+          images[i] = img;
+        }
+      }
+      loadFrames();
+
+      /* ── Phase display helper ── */
+      function setPhase(idx) {
+        phases.forEach((p, i) => {
+          p.style.display = i === idx ? 'block' : 'none';
+        });
+      }
+
+      /* ── GSAP ScrollTrigger ── */
+      gsap.registerPlugin(ScrollTrigger);
+
+      const scrollObj = { frame: 0, prog: 0 };
+
+      ScrollTrigger.create({
+        trigger: '#scroll-container',
+        start: 'top top',
+        end:   'bottom bottom',
+        scrub: 1,
+        onUpdate(self) {
+          const p = self.progress;
+          scrollObj.prog = p;
+
+          /* Frame index */
+          const fi = Math.min(TOTAL_FRAMES - 1, Math.round(p * (TOTAL_FRAMES - 1)));
+          if (fi !== currentFrame) {
+            currentFrame = fi;
+            if (framesReady) {
+              drawFrame(fi);
+            } else {
+              drawFallback(p);
+            }
+          }
+
+          /* Phase switching at 4 equal zones */
+          const phaseIdx = Math.min(3, Math.floor(p * 4));
+          setPhase(phaseIdx);
+        }
+      });
+
+      /* Initial fallback draw */
+      drawFallback(0);
+
+      /* ─────────────────────────────────────────
+         SCROLL PROGRESS BAR
+      ───────────────────────────────────────── */
+      const bar = document.getElementById('scroll-progress');
+      window.addEventListener('scroll', () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = (window.scrollY / max * 100) + '%';
+      }, { passive: true });
+
+      /* ─────────────────────────────────────────
+         WORK SECTION — reveal on scroll
+      ───────────────────────────────────────── */
+      gsap.utils.toArray('.project-card').forEach((card, i) => {
+        gsap.from(card, {
+          scrollTrigger: { trigger: card, start: 'top 88%', toggleActions: 'play none none none' },
+          opacity: 0,
+          y: 40,
+          duration: 1,
+          delay: i * 0.15,
+          ease: 'power3.out'
+        });
+      });
+
+      /* Testimonials */
+      gsap.utils.toArray('.testimonial-card').forEach((card, i) => {
+        gsap.from(card, {
+          scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' },
+          opacity: 0,
+          y: 30,
+          duration: 0.9,
+          delay: i * 0.12,
+          ease: 'power2.out'
+        });
+      });
+
+      /* Pillars */
+      gsap.utils.toArray('.pillar').forEach((el, i) => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: 'top 90%' },
+          opacity: 0,
+          x: 30,
+          duration: 0.8,
+          delay: i * 0.1,
+          ease: 'power2.out'
+        });
+      });
+
+      /* Service cards */
+      gsap.utils.toArray('.service-card').forEach((el, i) => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: 'top 92%' },
+          opacity: 0,
+          y: 20,
+          duration: 0.7,
+          delay: i * 0.08,
+          ease: 'power2.out'
+        });
+      });
+
+      /* Section headers */
+      gsap.utils.toArray('.section-title').forEach(el => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: 'top 88%' },
+          opacity: 0,
+          y: 25,
+          duration: 1,
+          ease: 'power3.out'
+        });
+      });
+
+    })();
+  </script>
+</body>
+</html>
