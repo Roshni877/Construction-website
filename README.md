@@ -1,5 +1,5 @@
 # Lux Construction — Scrollytelling Website
-## Setup Guide for Roshni
+## Setup Guide 
 
 ---
 
